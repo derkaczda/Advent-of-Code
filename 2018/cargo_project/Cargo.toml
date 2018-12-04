@@ -1,7 +1,6 @@
 [package]
-name = "day4"
+name = "cargo_project"
 version = "0.1.0"
 authors = ["dldz <daniel.derkacz@methodpark.de>"]
 
 [dependencies]
-chrono = "0.4.6"

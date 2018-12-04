@@ -6,9 +6,9 @@ The language is [Rust](https://www.rust-lang.org/en-US/).
 ## How to start
 
 ```shell
-# In folder of the day
+cd cargo_project
 cargo build
-./target/debug/<day>.exe
+./target/debug/cargo_project.exe
 ```
 
 
@@ -16,4 +16,4 @@ cargo build
 
 | Day           | Task          |
 | ------------- | ------------- |
-| [4](./day4/)             | [Repose Record](https://adventofcode.com/2018/day/4) |
+| 4             | [Repose Record](https://adventofcode.com/2018/day/4) |
