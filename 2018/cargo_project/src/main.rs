@@ -1,5 +1,7 @@
+mod day1;
 mod day4;
 
 fn main() {
-    println!("Hello, world!");
+    day1::problem1();
+
 }
