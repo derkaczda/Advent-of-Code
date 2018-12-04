@@ -6,8 +6,9 @@ The language is [Rust](https://www.rust-lang.org/en-US/).
 ## How to start
 
 ```shell
-rustc ./<day>/<day>.rc
-./<day>.exe
+# In folder of the day
+cargo build
+./target/debug/<day>.exe
 ```
 
 
