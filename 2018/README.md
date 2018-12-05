@@ -7,8 +7,7 @@ The language is [Rust](https://www.rust-lang.org/en-US/).
 
 ```shell
 cd cargo_project
-cargo build
-./target/debug/cargo_project.exe
+cargo run
 ```
 
 
@@ -18,3 +17,4 @@ cargo build
 | ------------- | ------------- |
 | 1             | [Chronal Calibration](https://adventofcode.com/2018/day/1) |
 | 4             | [Repose Record](https://adventofcode.com/2018/day/4) |
+| 5             | [Alchemical Reduction](https://adventofcode.com/2018/day/5) |
