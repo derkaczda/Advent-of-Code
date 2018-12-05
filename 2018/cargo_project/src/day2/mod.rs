@@ -32,7 +32,7 @@ pub fn problem1()
                 hash_map.insert(tmp_char, new_count);*/
 
                 if let Some(x) = hash_map.get_mut(&tmp_char) {
-                    x += 1
+                    *x += 1
                 }
             }
             else 
@@ -43,5 +43,11 @@ pub fn problem1()
                 );
             }
         }
+
+        println!("----------------------------\n");
+        for(k, v) in hash_map.iter() {
+            println!("Key {} Value {} \n", k,v);
+        }
     }
+
 }
