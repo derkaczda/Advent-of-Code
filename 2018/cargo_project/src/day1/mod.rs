@@ -1,14 +1,11 @@
 pub fn problem1()
 {
     let file_content = include_str!("data/input.txt");
-    let result = file_content
-    .split("\n")
+    let result: i32 = file_content
+    .split("\r\n")
     .filter(|v| *v != "")
-    .collect::<Vec<&str>>();
+    .map(|v| v.parse::<i32>().unwrap())
+    .sum();
 
-    for v in result.iter() {
-        println!("{}", v);
-        let tmp = v.parse::<i32>().unwrap();
-        println!("{}", tmp);
-    }
+    println!("Result of 1-1: {}", result);
 }
