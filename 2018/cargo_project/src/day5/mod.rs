@@ -1,6 +1,7 @@
 use std::fs::File;
 use std::fs;
 use std::io::prelude::*;
+use std::collections::HashMap;
 
 fn get_nth_char(string: &str, n: usize) -> char
 {
@@ -61,6 +62,22 @@ fn string_reduce(input : String) -> String
     }
 }
 
+fn remove_char(input : String, character : char) -> String
+{
+    let char_upper = character.to_uppercase().collect::<Vec<_>>();
+    let mut result = String::from("");
+    for index in 0..input.len() {
+        let c = get_nth_char_string(&input, index);
+        if c == character || c == char_upper[0]
+        {
+            continue;
+        }
+        result.push_str(&c.to_string());
+    }
+
+    result
+}
+
 
 pub fn problem1()
 {
@@ -68,4 +85,47 @@ pub fn problem1()
     let result = string_reduce(String::from(file_content));
     println!("The result string is {}", result.len());
 
+}
+
+pub fn problem2()
+{
+    let alphabet = (b'a' .. b'z' + 1)      // Start as u8
+        .map(|c| c as char)            // Convert all to chars
+        .filter(|c| c.is_alphabetic()) // Filter only alphabetic chars
+        .collect::<Vec<_>>();
+
+    let file_content = include_str!("./data/input_5_1.txt").to_string();
+    //let result = remove_char(file_content, 'a');
+    //println!("{}", result);
+    let mut hash_map = HashMap::new();
+    let mut hash_map_strings = HashMap::new();
+    for c in alphabet.iter() {
+        let content = &file_content;
+        let mod_str = remove_char(content.to_string(), *c);
+        //let result = string_reduce(mod_str).len();
+        hash_map_strings.insert(
+            c,
+            mod_str
+        );
+    }
+
+    for (k, v) in hash_map_strings.iter() {
+        let string = &v;
+        let result = string_reduce(string.to_string()).len();
+        hash_map.insert(
+            *k,
+            result
+        );
+    }
+
+    let mut shortest_pol_count = 1000000;
+    for (k,v) in hash_map.iter() {
+        //println!("{}{}", k,v);
+        if(*v < shortest_pol_count)
+        {
+            shortest_pol_count = *v;
+        }
+    }
+
+    println!("shortest pol {}", shortest_pol_count);
 }
