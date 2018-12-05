@@ -13,8 +13,8 @@ cargo run
 
 ## Timetable
 
-| Day           | Task          |
-| ------------- | ------------- |
-| 1             | [Chronal Calibration](https://adventofcode.com/2018/day/1) |
-| 4             | [Repose Record](https://adventofcode.com/2018/day/4) |
-| 5             | [Alchemical Reduction](https://adventofcode.com/2018/day/5) |
+| Day           | Task          | Problem 1 | Problem 2 |
+| ------------- | ------------- | ------------- | ------------- |
+| 1             | [Chronal Calibration](https://adventofcode.com/2018/day/1) | * | ! |
+| 4             | [Repose Record](https://adventofcode.com/2018/day/4) | ! | ! |
+| 5             | [Alchemical Reduction](https://adventofcode.com/2018/day/5) | ! | ! |
