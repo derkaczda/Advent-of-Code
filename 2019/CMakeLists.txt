@@ -15,14 +15,21 @@ file(GLOB aoc2019_SRC
 # add the executable
 add_executable(AOC_2019 ${aoc2019_SRC})
 
-add_custom_command(
-        TARGET AOC_2019 POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_SOURCE_DIR}/day1/input.txt
-                ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/day1/input.txt)
+set( INPUT_FILES
+ day1/input.txt
+ day2/input.txt
+)
 
-add_custom_command(
-        TARGET AOC_2019 POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy
-                ${CMAKE_SOURCE_DIR}/day1/input.txt
-                ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release/day1/input.txt)
+foreach( file_i ${INPUT_FILES})
+        add_custom_command(
+                TARGET AOC_2019 POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy
+                        ${CMAKE_SOURCE_DIR}/${file_i}
+                        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug/${file_i})
+
+        add_custom_command(
+                TARGET AOC_2019 POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy
+                        ${CMAKE_SOURCE_DIR}/${file_i}
+                        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release/${file_i})
+endforeach( file_i )
