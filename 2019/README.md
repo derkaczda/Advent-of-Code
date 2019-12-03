@@ -28,4 +28,5 @@ devenv AOC_2019.sln /Build
 | ------------- | ------------- | ------------- | ------------- |
 | 1             | [The Tyranny of the Rocket Equation](https://adventofcode.com/2019/day/1) | * | * |
 | 2             | [1202 Program Alarm](https://adventofcode.com/2019/day/2) | * | * |
+| 2             | [Crossed Wires](https://adventofcode.com/2019/day/3) | ! | ! |
 #### Overall Stars:  4 / 48
