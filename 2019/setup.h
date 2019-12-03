@@ -34,6 +34,7 @@ void run()
     {
         PrintProblemHeader(1);
         RunProblemOne();
+        std::cout << std::endl << std::endl;
         PrintProblemHeader(2);
         RunProblemTwo();
     }
