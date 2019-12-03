@@ -1,6 +1,6 @@
 # Advent of Code 2019
 
-My try on [Advent of Code 2018](https://adventofcode.com/2019). <br>
+My try on [Advent of Code 2019](https://adventofcode.com/2019). <br>
 The language is C++.
 
 ## How to start
