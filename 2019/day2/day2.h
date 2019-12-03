@@ -52,14 +52,14 @@ Instruction GetInstruction(const std::vector<int>&memory, const int& programCoun
     return inst;
 }
 
-void RunProblemOne()
+int RunProgram(int noun, int verb)
 {
     std::vector<int> memory;
     CreateProgramMemory(memory);
 
     // Fix program
-    memory[1] = 12;
-    memory[2] = 2;
+    memory[1] = noun;
+    memory[2] = verb;
 
     int programCounter = 0;
     bool programRunning = true;
@@ -83,7 +83,13 @@ void RunProblemOne()
         IncreaseProgramCounter(programCounter);
     }
 
-    std::cout << "Value at position 0 after program halts: " << memory[0] << std::endl;
+    return memory[0];
+} 
+
+void RunProblemOne()
+{
+    int answer = RunProgram(12, 2);
+    std::cout << "Value at position 0 after program halts: " << answer << std::endl;
 }
 
 void RunProblemTwo()
