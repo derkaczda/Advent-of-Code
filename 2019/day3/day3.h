@@ -5,6 +5,8 @@
 
 #include <algorithm>
 #include <sstream>
+#include <math.h>
+#include <limits>
 
 #define DIR_UP "U"
 #define DIR_DOWN "D"
@@ -39,24 +41,40 @@ std::vector<Vector2> CreateLineFromString(std::string& strLine)
     {
         std::string direction = dir.substr(0, 1);
         int value = std::stoi(dir.substr(1, std::string::npos));
-        
+
         if(direction == DIR_UP)
         {
-            lastPoint.y += value;
+            for(int i = 1; i <= value; i++)
+            {
+                lastPoint.y += 1;
+                outputList.push_back(lastPoint);
+            }
         }
         else if(direction == DIR_DOWN)
         {
-            lastPoint.y -= value;
+            for(int i = 1; i <= value; i++)
+            {
+                lastPoint.y -= 1;
+                outputList.push_back(lastPoint);
+            }
         }
         else if(direction == DIR_RIGHT)
         {
-            lastPoint.x += value;
+            for(int i = 1; i <= value; i++)
+            {
+                lastPoint.x += 1;
+                outputList.push_back(lastPoint);
+            }
         }
         else if(direction == DIR_LEFT)
         {
-            lastPoint.x -= value;
-        } 
-        outputList.push_back(lastPoint);
+            for(int i = 1; i <= value; i++)
+            {
+                lastPoint.x -= 1;
+                outputList.push_back(lastPoint);
+            }
+        }
+
     }
     return outputList;
 }
@@ -70,12 +88,24 @@ std::vector<Vector2> FindIntersectionPoints(const std::vector<Vector2>& lineOne,
         {
             if(point.x == pointTwo.x && point.y == pointTwo.y)
             {
-                std::cout << "intersection" << std::endl;
                 intersectionPoints.push_back(point);
             }
         }
     }
     return intersectionPoints;
+}
+
+int CalculateManhattenDistance(const std::vector<Vector2>& intersectionPoints)
+{
+    int distance = INT_MAX;
+    for(auto point : intersectionPoints)
+    {
+        int length = abs(point.x) + abs(point.y);
+        if(length < distance)
+            distance = length;
+    }
+
+    return distance;
 }
 
 void RunProblemOne()
@@ -85,11 +115,8 @@ void RunProblemOne()
     auto lineOne = CreateLineFromString(strLines[0]);
     auto lineTwo = CreateLineFromString(strLines[1]);
     auto intersectionPoints = FindIntersectionPoints(lineOne, lineTwo);
-    for(auto point : intersectionPoints)
-    {
-        std::cout << point.x << " " << point.y << std::endl;
-    }
-
+    int distance = CalculateManhattenDistance(intersectionPoints);
+    std::cout << "Manhatten distance is " << distance << std::endl;
 }
 
 void RunProblemTwo()
