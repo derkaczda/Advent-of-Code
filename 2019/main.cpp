@@ -1,4 +1,4 @@
-#define ADVENT_OF_CODE_2019_DAY 3
+#define ADVENT_OF_CODE_2019_DAY 4
 #define PROBLEM 0
 
 #include "setup.h"

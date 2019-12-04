@@ -12,7 +12,8 @@ file(GLOB aoc2019_SRC
     "day1/day1.h",
     "day2/day2.h",
     "day2/intprogram.h",
-    "day3/day3.h"
+    "day3/day3.h",
+    "day4/day4.h"
 )
 
 # add the executable
