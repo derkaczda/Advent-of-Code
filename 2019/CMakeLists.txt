@@ -15,7 +15,8 @@ file(GLOB aoc2019_SRC
     "day3/day3.h",
     "day4/day4.h",
     "day5/day5.h",
-    "day5/intprogram.h"
+    "day5/intprogram.h",
+    "day6/day6.h"
 )
 
 # add the executable
@@ -26,6 +27,7 @@ set( INPUT_FILES
  day2/input.txt
  day3/input.txt
  day5/input.txt
+ day6/input.txt
 )
 
 foreach( file_i ${INPUT_FILES})
