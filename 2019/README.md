@@ -31,4 +31,5 @@ devenv AOC_2019.sln /Build
 | 3             | [Crossed Wires](https://adventofcode.com/2019/day/3) | * | ! |
 | 4             | [Secure Container](https://adventofcode.com/2019/day/4) | * | ! |
 | 5             | [Sunny with a Chance of Asteroids](https://adventofcode.com/2019/day/5) | ! | ! |
-#### Overall Stars:  5 / 48
+| 6             | [Universal Orbit Map](https://adventofcode.com/2019/day/6) | ! | ! |
+#### Overall Stars:  6 / 48

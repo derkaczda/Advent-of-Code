@@ -8,6 +8,8 @@
     #include "day4/day4.h"
 #elif ADVENT_OF_CODE_2019_DAY == 5
     #include "day5/day5.h"
+#elif ADVENT_OF_CODE_2019_DAY == 6
+    #include "day6/day6.h"
 #endif
 
 void PrintHeader(int numberOfDay)
