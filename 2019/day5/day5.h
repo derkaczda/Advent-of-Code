@@ -5,7 +5,7 @@
 
 void RunProblemOne()
 {
-    IntProgram program("day5/testinput.txt");
+    IntProgram program("day5/input.txt");
     program.Run();
 }
 

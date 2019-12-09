@@ -22,6 +22,8 @@
 #define MODE_POSITION 0
 #define MODE_IMMEDIATE 1
 
+#define DEBUG_PROGRAM 0
+
 class IntProgram
 {
 private:
@@ -51,7 +53,10 @@ public:
         while(programRunning)
         {
             LoadNextInstruction();
+
+            #if DEBUG_PROGRAM == 1
             IntProgram::PrintInstruction(m_CurrentInstruction);
+            #endif
 
             if(m_CurrentInstruction.opcode == OPCODE_ADD)
             {
@@ -72,8 +77,21 @@ public:
                 programRunning = false;
                 continue;
             }
+            else if(m_CurrentInstruction.opcode == OPCODE_SAVE)
+            {
+                std::cout << "Input number: ";
+                int input;
+                std::cin >> input;
+                int savePosition = m_CurrentInstruction.params[0].value;
+                m_Memory[savePosition] = input;
+            }
+            else if(m_CurrentInstruction.opcode == OPCODE_OUTPUT)
+            {
+                int outPosition = m_CurrentInstruction.params[0].value;
+                std::cout << "OUTPUT: " << m_Memory[outPosition] << std::endl;
+            }
 
-            m_InstructionPointer += m_CurrentInstruction.parameterSize;
+            m_InstructionPointer += m_CurrentInstruction.parameterSize + 1;
         }  
     }
 
