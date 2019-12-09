@@ -13,6 +13,12 @@
 #define OPCODE_SAVE 3
 #define OPCODE_OUTPUT 4
 
+#define OPCODE_ADD_PARAM_COUNT 3
+#define OPCODE_MUL_PARAM_COUNT 3
+#define OPCODE_END_PARAM_COUNT 0
+#define OPCODE_SAVE_PARAM_COUNT 1
+#define OPCODE_OUTPUT_PARAM_COUNT 1
+
 #define MODE_POSITION 0
 #define MODE_IMMEDIATE 1
 
@@ -46,8 +52,6 @@ public:
         {
             LoadNextInstruction();
             IntProgram::PrintInstruction(m_CurrentInstruction);
-            //std::cout << "Instruction opcode: " << m_CurrentInstruction.opcode << " parameters " << m_CurrentInstruction.parameterSize << std::endl;
-            programRunning = false;
 
             if(m_CurrentInstruction.opcode == OPCODE_ADD)
             {
@@ -145,23 +149,33 @@ private:
     void LoadNextInstruction()
     {
         auto splitDigits = SplitNumber(m_Memory[m_InstructionPointer]);
-        int parameterCount = 0;
-        for(int i = 0; i < splitDigits.size(); i++)
+        m_CurrentInstruction.opcode = splitDigits[0];
+        if(m_CurrentInstruction.opcode == 9)
+            m_CurrentInstruction.opcode = OPCODE_END;
+        
+        switch(m_CurrentInstruction.opcode)
         {
-            if(i == 0)
-            {
-                m_CurrentInstruction.opcode = splitDigits[i];
-            }
-            else
-            {
-                InstructionParameter param;
-                param.mode = splitDigits[i];
-                param.value = m_Memory[m_InstructionPointer + parameterCount + 1];
-                m_CurrentInstruction.params[parameterCount] = param;
-                parameterCount++;
-            }  
+            case OPCODE_ADD:
+                m_CurrentInstruction.parameterSize = OPCODE_ADD_PARAM_COUNT; break;
+            case OPCODE_MUL:
+                m_CurrentInstruction.parameterSize = OPCODE_MUL_PARAM_COUNT; break;
+            case OPCODE_END:
+                m_CurrentInstruction.parameterSize = OPCODE_END_PARAM_COUNT; break;
+            case OPCODE_SAVE:
+                m_CurrentInstruction.parameterSize = OPCODE_SAVE_PARAM_COUNT; break;
+            case OPCODE_OUTPUT:
+                m_CurrentInstruction.parameterSize = OPCODE_OUTPUT_PARAM_COUNT; break;
         }
-        m_CurrentInstruction.parameterSize = parameterCount;
+        for(int i = 0; i < m_CurrentInstruction.parameterSize; i++)
+        {
+            InstructionParameter param;
+            if(i+2 >= splitDigits.size())
+                param.mode = MODE_POSITION;
+            else
+                param.mode = splitDigits[i + 2];
+            param.value = m_Memory[m_InstructionPointer + i + 1];
+            m_CurrentInstruction.params[i] = param;
+        }
     }
 
     int GetParameterValue(InstructionParameter parameter)
