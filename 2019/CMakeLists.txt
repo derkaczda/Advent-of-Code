@@ -28,6 +28,7 @@ set( INPUT_FILES
  day2/input.txt
  day3/input.txt
  day5/input.txt
+ day5/testinput.txt
  day6/input.txt
  day6/testinput.txt
 )

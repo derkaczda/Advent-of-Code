@@ -5,7 +5,8 @@
 
 void RunProblemOne()
 {
-
+    IntProgram program("day5/testinput.txt");
+    program.Run();
 }
 
 void RunProblemTwo()
