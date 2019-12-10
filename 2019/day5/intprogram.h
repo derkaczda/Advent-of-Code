@@ -12,12 +12,21 @@
 #define OPCODE_END 99
 #define OPCODE_SAVE 3
 #define OPCODE_OUTPUT 4
+#define OPCODE_JUMP_IF_TRUE 5
+#define OPCODE_JUMP_IF_FALSE 6
+#define OPCODE_LESS_THAN 7
+#define OPCODE_EQUAL 8
+
 
 #define OPCODE_ADD_PARAM_COUNT 3
 #define OPCODE_MUL_PARAM_COUNT 3
 #define OPCODE_END_PARAM_COUNT 0
 #define OPCODE_SAVE_PARAM_COUNT 1
 #define OPCODE_OUTPUT_PARAM_COUNT 1
+#define OPCODE_JUMP_IF_TRUE_PARAM_COUNT 2
+#define OPCODE_JUMP_IF_FALSE_PARAM_COUNT 2
+#define OPCODE_LESS_THAN_PARAM_COUNT 3
+#define OPCODE_EQUAL_PARAM_COUNT 3
 
 #define MODE_POSITION 0
 #define MODE_IMMEDIATE 1
@@ -90,6 +99,48 @@ public:
                 int outPosition = m_CurrentInstruction.params[0].value;
                 std::cout << "OUTPUT: " << m_Memory[outPosition] << std::endl;
             }
+            else if(m_CurrentInstruction.opcode == OPCODE_JUMP_IF_TRUE)
+            {
+                if(GetParameterValue(m_CurrentInstruction.params[0]) != 0)
+                {
+                    m_InstructionPointer = GetParameterValue(m_CurrentInstruction.params[1]);
+                    continue;
+                }
+            }
+            else if(m_CurrentInstruction.opcode == OPCODE_JUMP_IF_FALSE)
+            {
+                if(GetParameterValue(m_CurrentInstruction.params[0]) == 0)
+                {
+                    m_InstructionPointer = GetParameterValue(m_CurrentInstruction.params[1]);
+                    continue;
+                }
+            }
+            else if(m_CurrentInstruction.opcode == OPCODE_LESS_THAN)
+            {
+                int valueOne = GetParameterValue(m_CurrentInstruction.params[0]);
+                int valueTwo = GetParameterValue(m_CurrentInstruction.params[1]);
+                int saveValue = 0;
+                if(valueOne < valueTwo)
+                {
+                    saveValue = 1;
+                }
+
+                int savePosition = m_CurrentInstruction.params[2].value;
+                m_Memory[savePosition] = saveValue;
+            }
+            else if(m_CurrentInstruction.opcode == OPCODE_LESS_THAN)
+            {
+                int valueOne = GetParameterValue(m_CurrentInstruction.params[0]);
+                int valueTwo = GetParameterValue(m_CurrentInstruction.params[1]);
+                int saveValue = 0;
+                if(valueOne == valueTwo)
+                {
+                    saveValue = 1;
+                }
+
+                int savePosition = m_CurrentInstruction.params[2].value;
+                m_Memory[savePosition] = saveValue;
+            }
 
             m_InstructionPointer += m_CurrentInstruction.parameterSize + 1;
         }  
@@ -110,6 +161,14 @@ public:
             opcode = "OUTPUT";
         else if(instruction.opcode == OPCODE_SAVE)
             opcode = "SAVE";
+        else if(instruction.opcode == OPCODE_JUMP_IF_TRUE)
+            opcode = "JUMP_IF_TRUE";
+        else if(instruction.opcode == OPCODE_JUMP_IF_FALSE)
+            opcode = "JUMP_IF_FALSE";
+        else if(instruction.opcode == OPCODE_LESS_THAN)
+            opcode = "LESS_THAN";
+        else if(instruction.opcode == OPCODE_EQUAL)
+            opcode = "EQUAL";
         else
             opcode = "UNKNOWN";
 
@@ -183,6 +242,14 @@ private:
                 m_CurrentInstruction.parameterSize = OPCODE_SAVE_PARAM_COUNT; break;
             case OPCODE_OUTPUT:
                 m_CurrentInstruction.parameterSize = OPCODE_OUTPUT_PARAM_COUNT; break;
+            case OPCODE_JUMP_IF_TRUE:
+                m_CurrentInstruction.parameterSize = OPCODE_JUMP_IF_TRUE_PARAM_COUNT; break;
+            case OPCODE_JUMP_IF_FALSE:
+                m_CurrentInstruction.parameterSize = OPCODE_JUMP_IF_FALSE_PARAM_COUNT; break;
+            case OPCODE_LESS_THAN:
+                m_CurrentInstruction.parameterSize = OPCODE_LESS_THAN_PARAM_COUNT; break;
+            case OPCODE_EQUAL:
+                m_CurrentInstruction.parameterSize = OPCODE_EQUAL_PARAM_COUNT; break;
         }
         for(int i = 0; i < m_CurrentInstruction.parameterSize; i++)
         {

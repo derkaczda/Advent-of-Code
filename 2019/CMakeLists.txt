@@ -16,6 +16,8 @@ file(GLOB aoc2019_SRC
     "day4/day4.h",
     "day5/day5.h",
     "day5/intprogram.h",
+    "day5/intprogram_improved.h",
+    "day5/instruction.h",
     "day6/day6.h",
     "day6/orbitgraph.h"
 )
