@@ -6,7 +6,7 @@
 
 void RunProblemOne()
 {
-    IntProgram program("E:/Advent-of-Code2019-Build/bin/Debug/day5/input.txt");
+    IntProgram program("day5/input.txt");
     program.Run();
 }
 
