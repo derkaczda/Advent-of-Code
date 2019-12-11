@@ -30,6 +30,6 @@ devenv AOC_2019.sln /Build
 | 2             | [1202 Program Alarm](https://adventofcode.com/2019/day/2) | * | * |
 | 3             | [Crossed Wires](https://adventofcode.com/2019/day/3) | * | ! |
 | 4             | [Secure Container](https://adventofcode.com/2019/day/4) | * | ! |
-| 5             | [Sunny with a Chance of Asteroids](https://adventofcode.com/2019/day/5) | ! | ! |
+| 5             | [Sunny with a Chance of Asteroids](https://adventofcode.com/2019/day/5) | * | * |
 | 6             | [Universal Orbit Map](https://adventofcode.com/2019/day/6) | * | ! |
-#### Overall Stars:  7 / 48
+#### Overall Stars:  9 / 48

@@ -23,7 +23,8 @@ public:
         m_Instructions.push_back(new MultiplyInstruction());
         m_Instructions.push_back(new SaveInstruction());
         m_Instructions.push_back(new OutputInstruction());
-        m_Instructions.push_back(new JumpIfTrueInstruction());
+		m_Instructions.push_back(new JumpIfTrueInstruction());
+		m_Instructions.push_back(new JumpIfFalseInstruction());
         m_Instructions.push_back(new LessThanInstruction());
         m_Instructions.push_back(new EqualInstruction());
     }
