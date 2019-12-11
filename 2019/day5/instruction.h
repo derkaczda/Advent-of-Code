@@ -60,8 +60,9 @@ public:
     {
         int valueOne = GetParameterValueAtPosition(0, memory);
         int valueTwo = GetParameterValueAtPosition(1, memory);
-        int savePos = GetParameterValueAtPosition(2, memory);
+		int savePos = params[2].value; //  (2, memory);
         memory[savePos] = valueOne + valueTwo;
+        instructionPointer += GetParamLength() + 1;
         return true;
     }
 };
@@ -90,8 +91,9 @@ public:
     {
         int valueOne = GetParameterValueAtPosition(0, memory);
         int valueTwo = GetParameterValueAtPosition(1, memory);
-        int savePos = GetParameterValueAtPosition(2, memory);
+		int savePos = params[2].value; //GetParameterValueAtPosition(2, memory);
         memory[savePos] = valueOne * valueTwo;
+        instructionPointer += GetParamLength() + 1;
         return true;
     }
 };
@@ -108,7 +110,9 @@ public:
         std::cout << "Input number: ";
         int input;
         std::cin >> input;
-        memory[GetParameterValueAtPosition(0, memory)] = input;
+		int pos = params[0].value; //GetParameterValueAtPosition(0, memory);
+        memory[pos] = input;
+        instructionPointer += GetParamLength() + 1;
         return true;
     }
 };
@@ -122,9 +126,88 @@ public:
 
     virtual bool DoInstruction(std::vector<int>& memory, int& instructionPointer) override
     {
-        std::cout << "OUTPUT: " << memory[GetParameterValueAtPosition(0, memory)] << std::endl;
+        std::cout << "OUTPUT: " << GetParameterValueAtPosition(0, memory) << std::endl;
+        instructionPointer += GetParamLength() + 1;
         return true;
     }
 };
+
+class JumpIfTrueInstruction : public Instruction 
+{
+public:
+    JumpIfTrueInstruction()
+        : Instruction("JumpIfTrue", 5, 2)
+    {}
+
+    virtual bool DoInstruction(std::vector<int>& memory, int& instructionPointer) override
+    {
+        if(GetParameterValueAtPosition(0, memory) != 0)
+            instructionPointer = GetParameterValueAtPosition(1, memory);
+        else
+            instructionPointer += GetParamLength() + 1;
+        return true;
+    }
+};
+
+class JumpIfFalseInstruction : public Instruction 
+{
+public:
+    JumpIfFalseInstruction()
+        : Instruction("JumpIfFalse", 6, 2)
+    {}
+
+    virtual bool DoInstruction(std::vector<int>& memory, int& instructionPointer) override
+    {
+        if(GetParameterValueAtPosition(0, memory) == 0)
+            instructionPointer = GetParameterValueAtPosition(1, memory);
+        else
+            instructionPointer += GetParamLength() + 1;
+        return true;
+    }
+};
+
+class LessThanInstruction : public Instruction
+{
+public:
+    LessThanInstruction()
+        : Instruction("LessThan", 7, 3)
+    {}
+
+    virtual bool DoInstruction(std::vector<int>& memory, int& instructionPointer) override
+    {
+        int valueOne = GetParameterValueAtPosition(0, memory);
+        int valueTwo = GetParameterValueAtPosition(1, memory);
+        int savePos = params[2].value;
+        int saveValue = 0;
+        if(valueOne < valueTwo)
+            saveValue = 1;
+        memory[savePos] = saveValue;
+        instructionPointer += GetParamLength() + 1;
+        return true;
+    }
+};
+
+class EqualInstruction : public Instruction
+{
+public:
+    EqualInstruction()
+        : Instruction("Equal", 8, 3)
+    {}
+
+    virtual bool DoInstruction(std::vector<int>& memory, int& instructionPointer) override
+    {
+        int valueOne = GetParameterValueAtPosition(0, memory);
+        int valueTwo = GetParameterValueAtPosition(1, memory);
+        int savePos = params[2].value;
+        int saveValue = 0;
+        if(valueOne == valueTwo)
+            saveValue = 1;
+        memory[savePos] = saveValue;
+        instructionPointer += GetParamLength() + 1;
+        return true;
+    }
+};
+
+
 
 #endif

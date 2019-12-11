@@ -23,6 +23,9 @@ public:
         m_Instructions.push_back(new MultiplyInstruction());
         m_Instructions.push_back(new SaveInstruction());
         m_Instructions.push_back(new OutputInstruction());
+        m_Instructions.push_back(new JumpIfTrueInstruction());
+        m_Instructions.push_back(new LessThanInstruction());
+        m_Instructions.push_back(new EqualInstruction());
     }
 
     void Run()
@@ -32,6 +35,7 @@ public:
         {
             Instruction* inst = NextInstruction();
             programRunning = inst->DoInstruction(m_Memory, m_InstructionPointer);
+			//m_InstructionPointer += inst->GetParamLength() + 1;
         }
     }
 
@@ -68,11 +72,15 @@ private:
         return splitDigits;
     }
 
-    Instruction* FindInstructionWithOpCode(int opcode)
+    Instruction* FindInstructionWithOpCode(int opcode, int opcodeTwo)
     {
+		int code = opcode;
+		if(opcodeTwo != 0)
+			code = std::stoi(std::to_string(opcodeTwo) + std::to_string(opcode));
+
         for(Instruction* inst : m_Instructions)
         {
-            if(inst->GetOpcode() == opcode)
+            if(inst->GetOpcode() == code)
                 return inst;
         }
     }
@@ -80,7 +88,11 @@ private:
     Instruction* NextInstruction()
     {
         auto splitDigits = SplitNumber(m_Memory[m_InstructionPointer]);
-        Instruction* instruction = FindInstructionWithOpCode(splitDigits[0]);
+		Instruction* instruction;
+		if (splitDigits.size() > 1)
+			instruction = FindInstructionWithOpCode(splitDigits[0],splitDigits[1]);
+		else
+			instruction = FindInstructionWithOpCode(splitDigits[0], 0);
         for(int i = 0; i < instruction->GetParamLength(); i++)
         {
             InstructionParameter param;
