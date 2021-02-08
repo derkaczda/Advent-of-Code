@@ -17,18 +17,19 @@ isTree grid x y = (gridValue grid x y) == '#'
 wrap :: Int -> Int -> Int
 wrap max x = if x >= max then (x `mod` max) else x
 
-countTrees :: [[Char]] -> Int -> Int -> Int
-countTrees grid x y 
+countTrees :: [[Char]] -> Int -> Int -> (Int, Int)-> Int
+countTrees grid x y (stepx, stepy) 
   | y >= gridHeight grid = 0
-  | isTree grid wrappedX y = 1 + countTrees grid (wrappedX+3) (y+1) 
-  | otherwise = 0 + countTrees grid (wrappedX+3) (y+1)
+  | isTree grid wrappedX y = 1 + countTrees grid (wrappedX+stepx) (y+stepy) (stepx, stepy) 
+  | otherwise = 0 + countTrees grid (wrappedX+stepx) (y+stepy) (stepx, stepy)
   where wrappedX = wrap (gridWidth grid) x
 
 problemOne :: [[Char]] -> Int
-problemOne grid = countTrees grid 0 0
+problemOne grid = countTrees grid 0 0 (3, 1)
 
 problemTwo :: [[Char]] -> Int
-problemTwo = undefined
+problemTwo grid = product [ countTrees grid 0 0 step | step <- steps ]
+  where steps = [(1,1), (3,1), (5,1), (7,1), (1,2)]
 
 getProblem :: Int -> ([[Char]] -> Int)
 getProblem x = if x == 1 then problemOne else problemTwo
