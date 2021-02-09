@@ -28,8 +28,9 @@ problemOne :: [[Char]] -> Int
 problemOne grid = countTrees grid 0 0 (3, 1)
 
 problemTwo :: [[Char]] -> Int
-problemTwo grid = product [ countTrees grid 0 0 step | step <- steps ]
+problemTwo grid = product results 
   where steps = [(1,1), (3,1), (5,1), (7,1), (1,2)]
+        results = map (countTrees grid 0 0) steps
 
 getProblem :: Int -> ([[Char]] -> Int)
 getProblem x = if x == 1 then problemOne else problemTwo
