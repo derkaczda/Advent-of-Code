@@ -9,20 +9,15 @@ split delim (x:xs)
   | otherwise = (x : head rest) : tail rest 
   where rest = split delim xs
 
-onlyCountryMissing :: [[String]] -> Bool
-onlyCountryMissing [] = False
-onlyCountryMissing [x] = if (x !! 0) == "cid" then True else False
-onlyCountryMissing (x:xs)
-  | (x !! 0) == "cid" = False
-  | otherwise = onlyCountryMissing xs
+allKeysAvailable :: [String] -> Bool
+allKeysAvailable input = and [k `elem` input | k <- keys]
+  where keys = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
 
 isBatchValid :: String -> Bool
-isBatchValid input
-  | 8 == length keyValuePairs = True
-  | 7 == length keyValuePairs = onlyCountryMissing keyValuePairs
-  | otherwise = False
-  where pairs = split ' ' input
-        keyValuePairs = map (split ':') pairs
+isBatchValid batch = allKeysAvailable keys
+  where key_values = split ' ' batch
+        keys = concat $ map (take 1 . split ':') key_values
+        countryAvailable = "cid" `elem` keys
 
 getUntilBatchEnd :: [String] -> String
 getUntilBatchEnd [] = ""
