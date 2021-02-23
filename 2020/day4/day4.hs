@@ -17,9 +17,58 @@ split delim (x:xs)
   | otherwise = (x : head rest) : tail rest 
   where rest = split delim xs
 
+byrValid :: String -> Bool
+byrValid value = length value == 4 && iValue >= 1920 && iValue <= 2002
+  where iValue = read value
+
+iyrValid :: String -> Bool
+iyrValid value = length value == 4 && iValue >= 2010 && iValue <= 2020
+  where iValue = read value
+
+eyrValid :: String -> Bool
+eyrValid value = length value == 4 && iValue >= 2020 && iValue <= 2030
+  where iValue = read value
+
+hgtValid :: String -> Bool
+hgtValid value = metricValid && valuesValid 
+  where sValue = takeWhile isDigit value
+        parsedValue = read sValue
+        metric = drop (length sValue) value
+        metricValid = metric == "cm" || metric == "in"
+        valuesValid = if metric == "cm" 
+                         then parsedValue >= 150 && parsedValue <= 193 
+                         else parsedValue >= 59 && parsedValue <= 76
+
+hclValid :: String -> Bool
+hclValid value = hashAvailable && and list && length list == 6 
+  where possibleChars = ['0'..'9'] ++ ['a'..'f']
+        hashAvailable = '#' == (value !! 0)
+        list = [c `elem` possibleChars | c <- (drop 1 value)]
+
+eclValid :: String -> Bool
+eclValid value = value `elem` possibleValues 
+  where possibleValues = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
+
+pidValid :: String -> Bool
+pidValid value = length value == 9 
+
+keyValid :: String -> String -> Bool
+keyValid key 
+  | key == "byr" = byrValid
+  | key == "iyr" = iyrValid
+  | key == "eyr" = eyrValid
+  | key == "hgt" = hgtValid
+  | key == "hcl" = hclValid
+  | key == "ecl" = eclValid
+  | key == "pid" = pidValid
+  | otherwise = const True
+
 allKeysAvailable :: Batch -> Bool
 allKeysAvailable batch = and [k `elem` keys | k <- possibleKeys]
   where keys = fst $ unzip batch
+
+allKeysValid :: Batch -> Bool
+allKeysValid batch = and [keyValid k v | (k, v) <- batch]
 
 -- gets batch in string representation: "ecl:gry pid:860033327 eyr:2020 hcl:#fffffdbyr:1937 iyr:2017 cid:147 hgt:183cm" 
 -- returns a parsed Batch
@@ -55,7 +104,10 @@ problemOne input = length validBatches
         validBatches = filter allKeysAvailable batches
 
 problemTwo :: [String] -> Int
-problemTwo = undefined
+problemTwo input = length batchesWithValidKeys
+  where batches = inputToBatches input 
+        batchesWithAllKeys = filter allKeysAvailable batches
+        batchesWithValidKeys = filter allKeysValid batchesWithAllKeys
 
 data Problem = One | Two
 
