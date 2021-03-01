@@ -21,13 +21,21 @@ computeSeatID part = rowNumber * 8 + columnNumber
         rowNumber = bpartition ('F', 'B') (0, 127) rowPartition
         columnNumber = bpartition ('L', 'R') (0, 7) columnPartition
 
+getAllMissingIds :: [Int] -> Int -> [Int] -> [Int]
+getAllMissingIds [] last acc = acc
+getAllMissingIds (x:xs) last acc
+  | last == x = getAllMissingIds xs (last + 1) acc
+  | otherwise = getAllMissingIds (x:xs) (last + 1) (last : acc)
+
 -- get list of binary partitions
 -- ["FFFBBBBRLL", "FFBFBFBFRL", ...]
 problemOne :: [String] -> Int
 problemOne input = maximum $ map computeSeatID input 
 
 problemTwo :: [String] -> Int
-problemTwo = undefined
+problemTwo input = head allMissings 
+  where allIds = sort $ map computeSeatID input
+        allMissings = getAllMissingIds allIds (head allIds) []
 
 getProblem :: Problem -> ([String] -> Int)
 getProblem One = problemOne
