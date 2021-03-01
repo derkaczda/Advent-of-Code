@@ -22,17 +22,28 @@ removeDuplicateAnswers (x:xs) acc
 answersOfGroup :: Group -> String
 answersOfGroup group = removeDuplicateAnswers (concat group) "" 
 
-countGroup :: Group -> Int 
-countGroup group = length $ answersOfGroup group
+sameAnsweresAsFirstMember :: String -> Group -> String -> String
+sameAnsweresAsFirstMember [] _ acc = acc
+sameAnsweresAsFirstMember (x:xs) rest acc
+  | allAgree = sameAnsweresAsFirstMember xs rest (x : acc)
+  | otherwise = sameAnsweresAsFirstMember xs rest acc
+  where allAgree = and [x `elem` y | y <- rest]
+
+everyoneAnsweredYes :: Group -> String 
+everyoneAnsweredYes group = sameAnsweresAsFirstMember (head group) (tail group) "" 
+
+countGroup :: (Group -> String) -> Group -> Int 
+countGroup f group = length $ f group
 
 -- Get the lines of our input with blank lines 
 -- as separators
 problemOne :: [String] -> Int
-problemOne input = sum $ map countGroup groups
+problemOne input = sum $ map (countGroup answersOfGroup) groups
   where groups = convertToGroups input
 
 problemTwo :: [String] -> Int
-problemTwo = undefined
+problemTwo input = sum $ map (countGroup everyoneAnsweredYes) groups
+  where groups = convertToGroups input
 
 getProblem :: Problem -> ([String] -> Int)
 getProblem One = problemOne
