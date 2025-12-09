@@ -4,9 +4,14 @@ def highest_joltage_for_bank (bank : str) -> int:
     bank = bank.strip("\n")
     bank_length = len(bank)
     ptr_left = 0
+    # first we need to identify the largest
+    # digit for power of 10^1 possible
     for idx in range(bank_length-1):
         if bank[idx] > bank[ptr_left]:
             ptr_left = idx
+    # afterwards we move over the remaining
+    # numbers in range [ptr_left+1, end]
+    # to find the 10^0 digit
     ptr_right = ptr_left+1
     for idx in range(ptr_left+1, bank_length):
         if bank[idx] > bank[ptr_right]:
