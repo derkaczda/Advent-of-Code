@@ -13,7 +13,7 @@ if __name__ == \"__main__\":
     input_path = osp.join(script_dir,'input', \"input.txt\")
 
     with open(input_path, \"r\") as f:
-        lines = f.readlines()" | tee day$1/puzzle1.py day$1/puzzle2.py
+        lines = f.read().splitlines()" | tee day$1/puzzle1.py day$1/puzzle2.py
 
 
 echo "import unittest
